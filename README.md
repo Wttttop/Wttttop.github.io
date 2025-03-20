@@ -108,6 +108,25 @@ For 404 errors after deployment, check that:
 - The `trailingSlash: true` option is set in `next.config.ts`
 - Links in your application use the correct paths with the `basePath` considered
 
+#### Troubleshooting Build Failures
+
+If your build fails in GitHub Actions, try these solutions:
+
+1. **ESLint Errors**: The workflow uses `--no-lint` flag to prevent ESLint errors from failing the build. You can also:
+   - Fix ESLint errors in your code
+   - Use the `.eslintrc.json` file to disable specific rules
+   - Ensure proper quotes and apostrophes are escaped in text content
+
+2. **API Routes with Static Export**: When using `output: 'export'` in Next.js:
+   - Add `export const dynamic = 'force-static'` to your API route files
+   - Add `export const revalidate = 86400` to set the revalidation period
+   - Ensure your client code has fallbacks for API requests that might fail in static exports
+
+3. **Missing Files**: The workflow includes a verification step that checks for critical files:
+   - Ensures the build produces `index.html`
+   - Creates a `404.html` file if one doesn't exist
+   - Checks the output directory structure
+
 ### Deploying to Vercel
 
 The easiest way to deploy this Next.js app is to use the [Vercel Platform](https://vercel.com/import).

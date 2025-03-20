@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server';
 import { load } from 'cheerio';
 
+// This ensures the route works with static exports
+export const dynamic = 'force-static';
+// Increase the revalidate time to reduce build warnings
+export const revalidate = 86400; // 24 hours
+
 // Replace this with your actual Google Scholar ID
 const SCHOLAR_ID = 'xMbNr1UAAAAJ'; // Your actual Google Scholar ID
 

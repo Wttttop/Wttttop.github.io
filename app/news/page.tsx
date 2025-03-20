@@ -4,13 +4,6 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { newsItems } from '../lib/data'
 
-// News item interface
-interface NewsItem {
-  title: string;
-  date: string;
-  content: string;
-}
-
 export default function News() {
   return (
     <div className="container py-8">

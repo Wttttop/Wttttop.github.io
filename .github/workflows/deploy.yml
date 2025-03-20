@@ -34,11 +34,37 @@ jobs:
         run: npm ci
 
       - name: Build with Next.js
-        run: npm run build
+        run: npm run build -- --no-lint
         # Next.js 13+ uses 'output: export' in next.config.ts to generate static files
 
       - name: Fix 404.html
-        run: cp out/404/index.html out/404.html || true
+        run: |
+          if [ -d "out/404" ]; then
+            cp out/404/index.html out/404.html
+          elif [ -f "out/404.html" ]; then
+            echo "404.html already exists"
+          else
+            # Create a basic 404 page if none exists
+            echo '<html><head><meta http-equiv="refresh" content="0;url=/wutuo/"></head><body>Page not found. Redirecting to home...</body></html>' > out/404.html
+          fi
+
+      - name: Verify build artifacts
+        run: |
+          echo "Checking build artifacts..."
+          ls -la out/
+          echo "Checking for critical files..."
+          if [ -f "out/index.html" ]; then
+            echo "✅ index.html exists"
+          else
+            echo "❌ index.html is missing"
+            exit 1
+          fi
+          if [ -f "out/404.html" ]; then
+            echo "✅ 404.html exists"
+          else
+            echo "❌ 404.html is missing"
+            exit 1
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

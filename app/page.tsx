@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { FaEnvelope, FaPhone, FaGoogle, FaUniversity } from 'react-icons/fa'
+import { FaEnvelope, FaPhone, FaGoogle } from 'react-icons/fa'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { newsItems } from './lib/data'
@@ -31,10 +31,16 @@ export default function Home() {
       try {
         setIsLoading(true);
         const response = await fetch('/api/scholar');
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch scholar data');
+        }
+        
         const data = await response.json();
         setScholarData(data);
       } catch (error) {
         console.error('Error fetching scholar data:', error);
+        // Keep the default values in state if fetch fails
       } finally {
         setIsLoading(false);
       }

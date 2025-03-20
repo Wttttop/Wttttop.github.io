@@ -8,16 +8,6 @@ const nextConfig: NextConfig = {
   },
   reactStrictMode: true,
   trailingSlash: true, // Add trailing slashes for better static site compatibility
-  // Configure to handle 404 pages correctly
-  async redirects() {
-    return [
-      {
-        source: '/404',
-        destination: '/404.html',
-        permanent: true,
-      },
-    ];
-  },
 };
 
 export default nextConfig;
