@@ -94,6 +94,20 @@ The GitHub Actions workflow will:
 
 You may need to adjust the `basePath` in `next.config.ts` if your repository has a different name.
 
+#### Troubleshooting GitHub Actions Deployment
+
+If you encounter issues with the GitHub Actions deployment:
+
+1. **Check the workflow execution logs** in the Actions tab to identify specific errors
+2. **Verify repository permissions** - make sure the repository has proper permissions set for GitHub Pages
+3. **Custom domain configuration** - if using a custom domain, update the `basePath` in `next.config.ts` to an empty string
+4. **Route issues** - if some pages don't load correctly, make sure all internal links use the Next.js `Link` component
+5. **Image loading issues** - all images should use the Next.js `Image` component with proper configuration
+
+For 404 errors after deployment, check that:
+- The `trailingSlash: true` option is set in `next.config.ts`
+- Links in your application use the correct paths with the `basePath` considered
+
 ### Deploying to Vercel
 
 The easiest way to deploy this Next.js app is to use the [Vercel Platform](https://vercel.com/import).
