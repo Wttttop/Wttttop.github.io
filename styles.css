@@ -468,6 +468,7 @@ nav {
   padding-left: 40px;
   position: relative;
   margin-bottom: 1.5rem;
+  transition: all 0.5s ease;
 }
 
 .news-list li::before {
@@ -482,6 +483,44 @@ nav {
   z-index: 1;
 }
 
+.hidden-news {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  margin: 0;
+  padding-left: 40px;
+  transition: all 0.5s ease-in-out;
+}
+
+.hidden-news.show {
+  max-height: 500px;
+  opacity: 1;
+  margin-bottom: 1.5rem;
+}
+
+/* Hidden Publications */
+.hidden-pub {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  transform: translateY(20px);
+  transition: all 0.5s ease-in-out, opacity 0.3s ease-in-out, transform 0.5s ease;
+}
+
+.hidden-pub.show {
+  max-height: 500px;
+  opacity: 0;
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+}
+
+.hidden-pub.show.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .view-all-button {
   display: inline-block;
   margin-top: 1rem;
@@ -490,12 +529,20 @@ nav {
   color: white;
   border-radius: 0.375rem;
   font-weight: 500;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, transform 0.2s;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
 }
 
 .view-all-button:hover {
   background-color: var(--primary-dark);
   text-decoration: none;
+  transform: translateY(-2px);
+}
+
+.view-all-button:active {
+  transform: translateY(0);
 }
 
 /* Publications Page */

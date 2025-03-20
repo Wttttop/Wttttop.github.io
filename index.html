@@ -77,7 +77,14 @@
           <ul class="news-list">
             <li>
               <div class="news-content">
-                <h3 class="news-title">New Publication in IEEE JSAC <span class="new-badge">New</span></h3>
+                <h3 class="news-title">Appointed as Editorial Board Member <span class="new-badge">New</span></h3>
+                <p>Appointed as an Associate Editor for IEEE Transactions on Communications.</p>
+                <p class="news-date">Jan 2025</p>
+              </div>
+            </li>
+            <li>
+              <div class="news-content">
+                <h3 class="news-title">New Publication in IEEE JSAC</h3>
                 <p>Our paper "Exploit High-Dimensional RIS Information to Localization: What Is the Impact of Faulty Element?" has been accepted by IEEE Journal on Selected Areas in Communications.</p>
                 <p class="news-date">Oct 2024</p>
               </div>
@@ -89,22 +96,37 @@
                 <p class="news-date">Jan 2024</p>
               </div>
             </li>
-            <li>
+            <!-- Hidden news items (initially hidden) -->
+            <li class="hidden-news">
               <div class="news-content">
                 <h3 class="news-title">Invited Talk at IEEE Communications Society</h3>
                 <p>Delivered an invited talk on "Recent Advances in RIS-aided Localization" at the IEEE Communications Society Workshop.</p>
                 <p class="news-date">Dec 2023</p>
               </div>
             </li>
-            <li>
+            <li class="hidden-news">
               <div class="news-content">
-                <h3 class="news-title">Appointed as Editorial Board Member</h3>
-                <p>Appointed as an Associate Editor for IEEE Communications Letters.</p>
+                <h3 class="news-title">Paper accepted in IEEE Internet of Things Journal</h3>
+                <p>Our paper "Joint Angle Estimation Error Analysis and 3D Positioning Algorithm Design for mmWave Positioning System" has been accepted for publication in IEEE Internet of Things Journal.</p>
                 <p class="news-date">Nov 2023</p>
               </div>
             </li>
+            <li class="hidden-news">
+              <div class="news-content">
+                <h3 class="news-title">New collaborative project on ISAC systems</h3>
+                <p>Started a new collaborative project on Integrated Sensing and Communications (ISAC) systems, focusing on fluid-antenna-assisted dual-functional radar-communication systems.</p>
+                <p class="news-date">Oct 2023</p>
+              </div>
+            </li>
+            <li class="hidden-news">
+              <div class="news-content">
+                <h3 class="news-title">Paper accepted in IEEE Wireless Communications Letters</h3>
+                <p>Our paper "Fingerprint-Based mmWave Positioning System Aided by Reconfigurable Intelligent Surface" has been accepted for publication in IEEE Wireless Communications Letters.</p>
+                <p class="news-date">Aug 2023</p>
+              </div>
+            </li>
           </ul>
-          <a href="news.html" class="view-all-button">View all news</a>
+          <button id="news-toggle-btn" class="view-all-button">View all news</button>
         </div>
       </section>
 
@@ -218,8 +240,21 @@
           <div class="card">
             <p>T. Wu, C. Pan, H. Ren, M. Di Renzo, M. Elkashlan, "Resource Allocation for Fluid Antenna Systems," IEEE Transactions on Wireless Communications, vol. 21, no. 3, pp. 2163-2177, March 2022.</p>
           </div>
+          <!-- Hidden publications (initially hidden) -->
+          <div class="card hidden-pub">
+            <p>T. Wu, C. Pan, K. Zhi, H. Ren, M. Elkashlan, J. Z. Wang, "Employing High-Dimensional RIS Information for RIS-aided Localization Systems," IEEE Communications Letters, vol. 28, no. 9, pp. 2046-2050, 2024.</p>
+          </div>
+          <div class="card hidden-pub">
+            <p>T. Wu, C. Pan, Y. Pan, H. Ren, M. Elkashlan, C.-X. Wang, "Fingerprint-Based mmWave Positioning System Aided by Reconfigurable Intelligent Surface," IEEE Wireless Communications Letters, vol. 12, no. 8, pp. 1379-1383, Aug. 2023.</p>
+          </div>
+          <div class="card hidden-pub">
+            <p>T. Wu, M. Jiang, Q. Zhang, Q. Li, J. Qin, "Beamforming Design in Multiple-Input-Multiple-Output Symbiotic Radio Backscatter Systems," IEEE Communications Letters, vol. 25, no. 6, pp. 1949-1953, June 2021.</p>
+          </div>
+          <div class="card hidden-pub">
+            <p>T. Wu, C. Pan, K. Zhi, G. C. Alexandropoulos, M. Clerck, L. Li, M. Crook, "Fluid Antenna Systems for 6G and Beyond Communications," IEEE Communications Magazines, vol. 60, no. 11, pp. 94-101, November 2022.</p>
+          </div>
         </div>
-        <a href="publications.html" class="view-all-button">View all publications</a>
+        <button id="pub-toggle-btn" class="view-all-button">View all publications</button>
       </section>
 
       <!-- Honors and Awards Section -->
@@ -293,7 +328,7 @@
     
     // Simple animation on scroll
     document.addEventListener('DOMContentLoaded', function() {
-      const cards = document.querySelectorAll('.card, .award-item, .education-item, .interest-item');
+      const cards = document.querySelectorAll('.card:not(.hidden-pub), .award-item, .education-item, .interest-item');
       
       function checkScroll() {
         cards.forEach((card, index) => {
@@ -356,6 +391,63 @@
           const icon = mobileMenuButton.querySelector('i');
           icon.classList.remove('fa-times');
           icon.classList.add('fa-bars');
+        }
+      });
+      
+      // News toggle functionality
+      const newsToggleBtn = document.getElementById('news-toggle-btn');
+      const hiddenNewsItems = document.querySelectorAll('.hidden-news');
+      
+      newsToggleBtn.addEventListener('click', function() {
+        // Toggle visibility of hidden news items
+        hiddenNewsItems.forEach(item => {
+          item.classList.toggle('show');
+        });
+        
+        // Update button text
+        if (this.textContent === 'View all news') {
+          this.textContent = 'View less';
+        } else {
+          this.textContent = 'View all news';
+        }
+        
+        // Smooth scroll back to news section if items are hidden
+        if (this.textContent === 'View all news') {
+          const newsSection = document.getElementById('news');
+          newsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+      
+      // Publications toggle functionality
+      const pubToggleBtn = document.getElementById('pub-toggle-btn');
+      const hiddenPubItems = document.querySelectorAll('.hidden-pub');
+      
+      pubToggleBtn.addEventListener('click', function() {
+        // Toggle visibility of hidden publication items
+        hiddenPubItems.forEach(item => {
+          item.classList.toggle('show');
+          
+          // Handle animation of newly visible items
+          if (item.classList.contains('show')) {
+            setTimeout(() => {
+              item.classList.add('visible');
+            }, 100);
+          } else {
+            item.classList.remove('visible');
+          }
+        });
+        
+        // Update button text
+        if (this.textContent === 'View all publications') {
+          this.textContent = 'View less';
+        } else {
+          this.textContent = 'View all publications';
+        }
+        
+        // Smooth scroll back to publications section if items are hidden
+        if (this.textContent === 'View all publications') {
+          const pubsSection = document.getElementById('publications');
+          pubsSection.scrollIntoView({ behavior: 'smooth' });
         }
       });
     });
