@@ -75,6 +75,25 @@ This feature uses a serverless API endpoint to scrape the citation data since Go
 
 This site can be easily deployed to platforms like Vercel, Netlify, or GitHub Pages.
 
+### Deploying with GitHub Actions
+
+This repository is configured with GitHub Actions to automatically build and deploy the website to GitHub Pages whenever changes are pushed to the main branch.
+
+To use this feature:
+
+1. Push your code to a GitHub repository
+2. Go to your repository settings -> Pages
+3. Under "Build and deployment" -> "Source", select "GitHub Actions"
+4. Make sure your repository is public, or you have GitHub Pro for private repositories
+5. Push a change to the main branch or manually trigger the workflow from the Actions tab
+
+The GitHub Actions workflow will:
+- Build your Next.js application
+- Deploy it to GitHub Pages
+- Make it available at `https://your-username.github.io/wutuo`
+
+You may need to adjust the `basePath` in `next.config.ts` if your repository has a different name.
+
 ### Deploying to Vercel
 
 The easiest way to deploy this Next.js app is to use the [Vercel Platform](https://vercel.com/import).
