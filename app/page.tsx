@@ -3,52 +3,18 @@
 import { motion } from 'framer-motion'
 import { FaEnvelope, FaPhone, FaGoogle } from 'react-icons/fa'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
 import { newsItems } from './lib/data'
 import Link from 'next/link'
 
-// Interface for Google Scholar data
-interface ScholarData {
-  citations: string;
-  hIndex: string;
-  i10Index: string;
-  lastUpdated?: string;
-  error?: string;
-}
+// Static citation data
+const scholarData = {
+  citations: '777',
+  hIndex: '10',
+  i10Index: '20',
+  lastUpdated: new Date().toISOString()
+};
 
 export default function Home() {
-  // State for citation data
-  const [scholarData, setScholarData] = useState<ScholarData>({
-    citations: '777',
-    hIndex: '10',
-    i10Index: '20',
-  });
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Fetch citation data on page load
-  useEffect(() => {
-    const fetchScholarData = async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetch('/api/scholar');
-        
-        if (!response.ok) {
-          throw new Error('Failed to fetch scholar data');
-        }
-        
-        const data = await response.json();
-        setScholarData(data);
-      } catch (error) {
-        console.error('Error fetching scholar data:', error);
-        // Keep the default values in state if fetch fails
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchScholarData();
-  }, []);
-
   return (
     <div className="container py-8">
       {/* Hero Section */}
@@ -88,11 +54,7 @@ export default function Home() {
               <div className="flex items-center gap-2">
                 <FaGoogle className="text-primary" />
                 <a href="https://scholar.google.com/citations?user=xMbNr1UAAAAJ" target="_blank" rel="noopener noreferrer">
-                  {isLoading ? (
-                    <span>Google Scholar (Loading...)</span>
-                  ) : (
-                    <span>Google Scholar (Citations: {scholarData.citations}; h-index: {scholarData.hIndex})</span>
-                  )}
+                  <span>Google Scholar (Citations: {scholarData.citations}; h-index: {scholarData.hIndex})</span>
                 </a>
               </div>
             </div>
@@ -312,16 +274,12 @@ export default function Home() {
         <h2 className="text-2xl font-bold mb-6 pb-2 border-b">Publications</h2>
         
         <div className="mb-4">
-          {isLoading ? (
-            <p className="font-semibold">Loading citation data...</p>
-          ) : (
-            <p className="font-semibold">
-              Citations: {scholarData.citations}; h-index: {scholarData.hIndex}; i10-index: {scholarData.i10Index}
-              {scholarData.lastUpdated && (
-                <span className="text-xs ml-2 font-normal text-muted-foreground">(Last updated: {new Date(scholarData.lastUpdated).toLocaleDateString()})</span>
-              )}
-            </p>
-          )}
+          <p className="font-semibold">
+            Citations: {scholarData.citations}; h-index: {scholarData.hIndex}; i10-index: {scholarData.i10Index}
+            {scholarData.lastUpdated && (
+              <span className="text-xs ml-2 font-normal text-muted-foreground">(Last updated: {new Date(scholarData.lastUpdated).toLocaleDateString()})</span>
+            )}
+          </p>
           <p className="text-muted-foreground">25 articles published/accepted by IEEE, including IEEE JSAC, TWC, JSTSP, TVT, IoTJ.</p>
         </div>
         

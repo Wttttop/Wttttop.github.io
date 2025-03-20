@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
   },
   reactStrictMode: true,
   trailingSlash: true, // Add trailing slashes for better static site compatibility
+  distDir: 'out', // Specify the build output directory
+  // Remove any dynamic features
+  experimental: {
+    // Disable any features not compatible with static export
+  },
 };
 
 export default nextConfig;

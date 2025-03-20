@@ -8,7 +8,7 @@ This is the personal academic homepage for Dr. Tuo Wu, Research Fellow at Nanyan
 - Modern UI with smooth animations
 - Sections for education, research interests, publications, honors, and professional activities
 - Detailed publications page with all research work
-- Automatic citation metrics updates from Google Scholar
+- Fully static site - perfect for GitHub Pages hosting
 - Built with Next.js and Tailwind CSS
 
 ## Getting Started
@@ -60,16 +60,14 @@ npm run start
 yarn start
 ```
 
-## Google Scholar Integration
+## Google Scholar Citation Data
 
-The homepage automatically fetches and displays your citation metrics from Google Scholar. To configure this for your own profile:
+The homepage displays citation metrics from Google Scholar. To update these statistics:
 
-1. Find your Google Scholar ID (it's in the URL of your profile page, e.g., `https://scholar.google.com/citations?user=YOUR_ID`)
-2. Update the `SCHOLAR_ID` constant in `app/api/scholar/route.ts` with your ID
-3. The application will fetch your citation count, h-index, and i10-index directly from Google Scholar
-4. The data is cached for 24 hours to avoid excessive requests to Google Scholar
+1. Update the static data in the `scholarData` constant in `app/page.tsx` with your current citation numbers
+2. Rebuild and redeploy the site
 
-This feature uses a serverless API endpoint to scrape the citation data since Google Scholar doesn't provide an official API.
+Since this is a fully static site optimized for GitHub Pages, it doesn't include dynamic API calls that could fail during the static export process.
 
 ## Deployment
 
@@ -77,7 +75,7 @@ This site can be easily deployed to platforms like Vercel, Netlify, or GitHub Pa
 
 ### Deploying with GitHub Actions
 
-This repository is configured with GitHub Actions to automatically build and deploy the website to GitHub Pages whenever changes are pushed to the main branch.
+This repository is configured with GitHub Actions to automatically build and deploy the static website to GitHub Pages whenever changes are pushed to the main branch.
 
 To use this feature:
 
@@ -88,7 +86,8 @@ To use this feature:
 5. Push a change to the main branch or manually trigger the workflow from the Actions tab
 
 The GitHub Actions workflow will:
-- Build your Next.js application
+- Build your fully static Next.js site
+- Create necessary files for GitHub Pages like .nojekyll and 404.html
 - Deploy it to GitHub Pages
 - Make it available at `https://your-username.github.io/wutuo`
 
@@ -117,15 +116,15 @@ If your build fails in GitHub Actions, try these solutions:
    - Use the `.eslintrc.json` file to disable specific rules
    - Ensure proper quotes and apostrophes are escaped in text content
 
-2. **API Routes with Static Export**: When using `output: 'export'` in Next.js:
-   - Add `export const dynamic = 'force-static'` to your API route files
-   - Add `export const revalidate = 86400` to set the revalidation period
-   - Ensure your client code has fallbacks for API requests that might fail in static exports
+2. **Static Site Issues**: When using a fully static site approach:
+   - Ensure you don't have any server-side or API route code that isn't compatible with static export
+   - Replace dynamic data fetching with static data in your components
+   - Make sure all images are handled properly with the `unoptimized: true` setting
 
-3. **Missing Files**: The workflow includes a verification step that checks for critical files:
-   - Ensures the build produces `index.html`
-   - Creates a `404.html` file if one doesn't exist
-   - Checks the output directory structure
+3. **File Path Issues**: For GitHub Pages deployment:
+   - Remember that all paths start with your repository name (e.g., `/wutuo/`) in production
+   - Use relative paths for assets when possible
+   - Ensure the `basePath` in `next.config.ts` matches your repository name
 
 ### Deploying to Vercel
 
